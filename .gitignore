@@ -4,3 +4,4 @@ gen/
 app.codegen/build/
 out/
 target/
+*.class
