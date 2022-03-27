@@ -1,5 +1,7 @@
+package com.tcs.edu.printer;
+
 /**
- * {@code ConsolePrinter} выводит сообщения на консоль
+ * {@code com.tcs.edu.printer.ConsolePrinter} выводит сообщения на консоль
  *
  * @author s.saparbekov
  * **/
