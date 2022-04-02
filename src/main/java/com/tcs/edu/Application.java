@@ -6,8 +6,9 @@ import com.tcs.edu.printer.ConsolePrinter;
 class Application {
     public static void main(String[] args) {
         String str = "Hello world!";
-        ConsolePrinter.print(TimestampMessageDecorator.decorate(str));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate(str));
-        ConsolePrinter.print(TimestampMessageDecorator.decorate(str));
+        for (int i = 0; i < 5; i++){
+            String decoratedMessage = TimestampMessageDecorator.decorate(str);
+            ConsolePrinter.print(decoratedMessage);
+        }
     }
 }
