@@ -10,12 +10,16 @@ import java.time.Instant;
 
 public class TimestampMessageDecorator {
 
+    public static int messageCount = 0;
     /**
-     * Метод возвращает строку с текущим временем
+     * Метод возвращает строку с счетчиком (messageCount) и текущим временем,
+     * и увеличивает счетчик
      *
      * @param message строка, которая будет сконкатинирована с текущим временем
      * **/
     public static String decorate(String message) {
-        return Instant.now() + " " + message;
+        messageCount++;
+        final var decoratedMessage = messageCount + " " + Instant.now() + " " + message;
+        return decoratedMessage;
     }
 }
