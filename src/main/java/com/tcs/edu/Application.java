@@ -1,13 +1,14 @@
 package com.tcs.edu;
 
-import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.model.Severity;
+import com.tcs.edu.service.MessageService;
 
 class Application {
     public static void main(String[] args) {
-        String str = "Hello world!";
-        for (int i = 0; i < 8; i++){
-            ConsolePrinter.print(TimestampMessageDecorator.decorate(str));
-        }
+        MessageService.init(Severity.MAJOR, "qwewqewq");
+        MessageService.init(Severity.MINOR, "dsadsa");
+        MessageService.init(Severity.REGULAR, "zxcxz");
+        MessageService.init(Severity.REGULAR, "hfgfh");
+        MessageService.init(Severity.MINOR, "uyiiy");
     }
 }

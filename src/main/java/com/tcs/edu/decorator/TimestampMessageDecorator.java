@@ -10,8 +10,6 @@ import java.time.Instant;
 
 public class TimestampMessageDecorator {
 
-    public static int messageCount = 0;
-    public static int PAGE_SIZE = 3;
     /**
      * Метод возвращает строку с счетчиком (messageCount) и текущим временем,
      * и увеличивает счетчик. При выводе разделяет "страницы" согласно PAGE_SIZE.
@@ -19,10 +17,6 @@ public class TimestampMessageDecorator {
      * @param message строка, которая будет сконкатинирована с текущим временем
      * **/
     public static String decorate(String message) {
-        messageCount++;
-        final var decoratedMessage = String.format("%d %s %s", messageCount, Instant.now(), message);
-        return messageCount % PAGE_SIZE == 0
-                ? decoratedMessage + "\n---"
-                : decoratedMessage;
+        return String.format("%s %s", Instant.now(), message);
     }
 }
