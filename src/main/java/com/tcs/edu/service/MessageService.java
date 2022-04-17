@@ -21,12 +21,16 @@ public class MessageService {
      * @param severity уровень важности
      *
      * **/
-    public static void init(Severity severity, String message) {
-        String numeratedTimestampMessage = NumerateMessageDecorator.decorate(TimestampMessageDecorator.decorate(message));
-        String severityNumeratedTimestampMessage = SeverityMessageDecorator.decorate(severity, numeratedTimestampMessage);
-        String finalMessage = NumerateMessageDecorator.messageCount % PAGE_SIZE == 0
-                ? severityNumeratedTimestampMessage + "\n---"
-                : severityNumeratedTimestampMessage;
-        ConsolePrinter.print(finalMessage);
+    public static void init(Severity severity, String... message) {
+        for (String currentMessage: message) {
+            String numeratedTimestampMessage =
+                    NumerateMessageDecorator.decorate(TimestampMessageDecorator.decorate(currentMessage));
+            String severityNumeratedTimestampMessage =
+                    SeverityMessageDecorator.decorate(severity, numeratedTimestampMessage);
+            String finalMessage = NumerateMessageDecorator.messageCount % PAGE_SIZE == 0
+                    ? severityNumeratedTimestampMessage + "\n---"
+                    : severityNumeratedTimestampMessage;
+            ConsolePrinter.print(finalMessage);
+        }
     }
 }
