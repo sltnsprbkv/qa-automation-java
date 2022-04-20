@@ -1,7 +1,5 @@
 package com.tcs.edu.decorator;
 
-import java.time.Instant;
-
 /**
  * Декорирование сообщений с операцией разделения
  *
