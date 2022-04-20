@@ -5,6 +5,7 @@ package com.tcs.edu.decorator;
  *
  * @author s.saparbekov
  * **/
+
 public class NumerateMessageDecorator {
 
     public static int messageCount = 0;

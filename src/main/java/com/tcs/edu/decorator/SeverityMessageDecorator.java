@@ -9,6 +9,8 @@ import com.tcs.edu.model.Severity;
  * **/
 public class SeverityMessageDecorator {
 
+    private static String messageFormat = "%s %s";
+
     /**
      * Метод возвращает строку с уровнем важности (severity).
      *
@@ -16,21 +18,17 @@ public class SeverityMessageDecorator {
      * @param severity уровень важности
      *
      * **/
+
     public static String decorate(Severity severity, String message) {
-        String severitySign;
         switch (severity) {
             case MAJOR:
-                severitySign = "(!!!)";
-                break;
+                return String.format(messageFormat, message, "(!!!)");
             case REGULAR:
-                severitySign = "(!)";
-                break;
+                return String.format(messageFormat, message, "(!)");
             case MINOR:
-                severitySign = "()";
-                break;
+                return String.format(messageFormat, message, "()");
             default:
-                throw new AssertionError("Unknown severity value");
+                return String.format(messageFormat, message, "(-)");
         }
-        return String.format("%s %s", message, severitySign);
     }
 }
