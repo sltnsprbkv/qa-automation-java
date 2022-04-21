@@ -15,7 +15,6 @@ import java.util.Arrays;
  * @author s.saparbekov
  * **/
 public class MessageService {
-    public static int PAGE_SIZE = 3;
 
     /**
      * Метод выводит декорированные сообщения, и разделяет их согласно PAGE_SIZE
