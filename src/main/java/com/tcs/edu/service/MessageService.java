@@ -8,6 +8,7 @@ import com.tcs.edu.model.Severity;
 import com.tcs.edu.printer.ConsolePrinter;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Сервис для вывода декорированных сообщений
@@ -17,7 +18,7 @@ import java.util.Arrays;
 public class MessageService {
 
     /**
-     * Метод выводит декорированные сообщения
+     * Метод выводит декорированные сообщения, кроме значений null
      *
      * @param messages строка, которая будет сконкатинирована с ее уровнем важности
      * @param severity уровень важности
@@ -25,6 +26,7 @@ public class MessageService {
      * **/
     public static void print(Severity severity, String... messages) {
         Arrays.stream(messages)
+                .filter(Objects::nonNull)
                 .map(TimestampMessageDecorator::decorate)
                 .map(NumerateMessageDecorator::decorate)
                 .map(message -> SeverityMessageDecorator.decorate(severity, message))
