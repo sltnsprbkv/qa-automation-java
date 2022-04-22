@@ -48,13 +48,7 @@ public class MessageService {
     public static void print(Severity severity, MessageOrder messageOrder, String... messages) {
         var finalMessages = Arrays.asList(messages);
         if (messageOrder.equals(MessageOrder.DESC)) Collections.reverse(finalMessages);
-        finalMessages.stream()
-                .filter(Objects::nonNull)
-                .map(TimestampMessageDecorator::decorate)
-                .map(NumerateMessageDecorator::decorate)
-                .map(message -> SeverityMessageDecorator.decorate(severity, message))
-                .map(SeparateDecorator::decorate)
-                .forEach(ConsolePrinter::print);
+        print(severity, finalMessages.toArray(String[]::new));
     }
 
     /**
@@ -76,13 +70,6 @@ public class MessageService {
         var finalMessages = Arrays.asList(messages);
         if (doubling.equals(Doubling.DISTINCT)) finalMessages =
                 finalMessages.stream().distinct().collect(Collectors.toList());
-        if (messageOrder.equals(MessageOrder.DESC)) Collections.reverse(finalMessages);
-        finalMessages.stream()
-                .filter(Objects::nonNull)
-                .map(TimestampMessageDecorator::decorate)
-                .map(NumerateMessageDecorator::decorate)
-                .map(message -> SeverityMessageDecorator.decorate(severity, message))
-                .map(SeparateDecorator::decorate)
-                .forEach(ConsolePrinter::print);
+        print(severity, messageOrder, finalMessages.toArray(String[]::new));
     }
 }
