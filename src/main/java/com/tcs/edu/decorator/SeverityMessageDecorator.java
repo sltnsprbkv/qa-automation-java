@@ -7,6 +7,7 @@ import com.tcs.edu.model.Severity;
  *
  * @author s.saparbekov
  * **/
+
 public class SeverityMessageDecorator {
 
     private static String messageFormat = "%s %s";
@@ -18,7 +19,6 @@ public class SeverityMessageDecorator {
      * @param severity уровень важности
      *
      * **/
-
     public static String decorate(Severity severity, String message) {
         switch (severity) {
             case MAJOR:
