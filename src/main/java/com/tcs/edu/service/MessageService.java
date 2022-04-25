@@ -8,9 +8,10 @@ import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
 import com.tcs.edu.model.Severity;
 import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.utils.CustomCollectionOperations;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Сервис для вывода декорированных сообщений
@@ -24,11 +25,11 @@ public class MessageService {
      * Метод выводит декорированные сообщения, кроме значений null
      *
      * @param severity уровень важности
-     * @param messages декорируемая строка
+     * @param messages декорируемые строки в stream
      *
      * **/
-    public static void print(Severity severity, String... messages) {
-        Arrays.stream(messages)
+    public static void print(Severity severity, Stream<String> messages) {
+        messages
                 .filter(Objects::nonNull)
                 .map(TimestampMessageDecorator::decorate)
                 .map(NumerateMessageDecorator::decorate)
@@ -38,17 +39,28 @@ public class MessageService {
     }
 
     /**
+     * Метод выводит декорированные сообщения, кроме значений null
+     *
+     * @param severity уровень важности
+     * @param messages декорируемые строки
+     *
+     * **/
+    public static void print(Severity severity, String... messages) {
+        print(severity, Arrays.stream(messages));
+    }
+
+    /**
      * Метод выводит отсортированные декорированные сообщения, кроме значений null
      *
      * @param severity уровень важности
      * @param messageOrder порядок сортировки
-     * @param messages декорируемая строка
+     * @param messages декорируемые строки
      *
      * **/
     public static void print(Severity severity, MessageOrder messageOrder, String... messages) {
-        var finalMessages = Arrays.asList(messages);
-        if (messageOrder.equals(MessageOrder.DESC)) Collections.reverse(finalMessages);
-        print(severity, finalMessages.toArray(String[]::new));
+        var finalMessages = messages;
+        if (messageOrder.equals(MessageOrder.DESC)) CustomCollectionOperations.reverse(finalMessages);
+        print(severity, finalMessages);
     }
 
     /**
@@ -58,7 +70,7 @@ public class MessageService {
      * @param severity уровень важности
      * @param messageOrder порядок сортировки
      * @param doubling параметр дублирования
-     * @param messages декорируемая строка
+     * @param messages декорируемые строки
      *
      * **/
     public static void print(
@@ -67,9 +79,8 @@ public class MessageService {
             Doubling doubling,
             String... messages
     ) {
-        var finalMessages = Arrays.asList(messages);
-        if (doubling.equals(Doubling.DISTINCT)) finalMessages =
-                finalMessages.stream().distinct().collect(Collectors.toList());
-        print(severity, messageOrder, finalMessages.toArray(String[]::new));
+        print(severity, messageOrder, doubling.equals(Doubling.DISTINCT)
+                ? Arrays.stream(messages).distinct().toArray(String[]::new)
+                : messages);
     }
 }
