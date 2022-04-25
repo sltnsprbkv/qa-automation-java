@@ -79,8 +79,9 @@ public class MessageService {
             Doubling doubling,
             String... messages
     ) {
+        var distinctMessages = Arrays.stream(messages).distinct().toArray(String[]::new);
         print(severity, messageOrder, doubling.equals(Doubling.DISTINCT)
-                ? Arrays.stream(messages).distinct().toArray(String[]::new)
+                ? distinctMessages
                 : messages);
     }
 }
