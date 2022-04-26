@@ -59,7 +59,9 @@ public class MessageService {
      * **/
     public static void print(Severity severity, MessageOrder messageOrder, String... messages) {
         var finalMessages = messages;
-        if (messageOrder.equals(MessageOrder.DESC)) CustomCollectionOperations.reverse(finalMessages);
+        if (messageOrder.equals(MessageOrder.DESC)) {
+            CustomCollectionOperations.reverse(finalMessages);
+        }
         print(severity, finalMessages);
     }
 
@@ -79,9 +81,8 @@ public class MessageService {
             Doubling doubling,
             String... messages
     ) {
-        var distinctMessages = Arrays.stream(messages).distinct().toArray(String[]::new);
         print(severity, messageOrder, doubling.equals(Doubling.DISTINCT)
-                ? distinctMessages
+                ? Arrays.stream(messages).distinct().toArray(String[]::new)
                 : messages);
     }
 }
