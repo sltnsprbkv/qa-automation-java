@@ -22,9 +22,9 @@ public class Message {
      * @param body тело сообщения, не может быть null
      *
      * **/
-    public Message(String body, Severity severity) throws NullPointerException {
+    public Message(String body, Severity severity) {
         if (body == null || severity == null) {
-            throw new NullPointerException("body or severity of message is null");
+            throw new IllegalArgumentException("body or severity of message is null");
         }
         this.body = body;
         this.severity = severity;
@@ -36,9 +36,9 @@ public class Message {
      * @param body тело сообщения, не может быть null
      *
      * **/
-    public Message(String body) throws NullPointerException {
+    public Message(String body) {
         if (body == null) {
-            throw new NullPointerException("body or severity of message is null");
+            throw new IllegalArgumentException("body or severity of message is null");
         }
         this.body = body;
         this.severity = Severity.REGULAR;
