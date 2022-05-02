@@ -38,7 +38,7 @@ public class Message {
      * **/
     public Message(String body) {
         if (body == null) {
-            throw new IllegalArgumentException("body or severity of message is null");
+            throw new IllegalArgumentException("body of message is null");
         }
         this.body = body;
         this.severity = Severity.REGULAR;
