@@ -12,19 +12,31 @@ import java.lang.reflect.Member;
  * @author s.saparbekov
  * **/
 
-public class SeparateDecorator implements MessageDecorator {
+public class SeparateDecorator extends MessageDecorator {
 
     private static int PAGE_SIZE = 3;
     private static String separator = "\n---";
+
+    public SeparateDecorator(MessageDecorator nextDecorator) {
+        super(nextDecorator);
+    }
+
+    public SeparateDecorator() {
+        super(null);
+    }
 
     /**
      * Метод возвращает строку с разделителем, если эта строка последняя по счету.
      *
      * @param message строка, к которой будет добавлен разделитель
      * **/
+    @Override
     public Message decorate(Message message) {
-        return NumerateMessageDecorator.messageCount % PAGE_SIZE == 0
-                ? new Message(message.getBody() + separator, message.getSeverity())
-                : new Message(message.getBody(), message.getSeverity());
+        Message newMessage = NumerateMessageDecorator.messageCount % PAGE_SIZE == 0
+                ? new Message(message, message.getBody() + separator)
+                : new Message(message, message.getBody());
+        return nextDecorator == null
+                ? newMessage
+                : nextDecorator.decorate(newMessage);
     }
 }

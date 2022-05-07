@@ -3,6 +3,9 @@ package com.tcs.edu.decorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.repository.Decorator;
 import com.tcs.edu.repository.MessageDecorator;
+import com.tcs.edu.repository.MessageService;
+
+import java.time.Instant;
 
 /**
  * Декорирование сообщений с операцией добавления уровня важности сообщения
@@ -10,9 +13,17 @@ import com.tcs.edu.repository.MessageDecorator;
  * @author s.saparbekov
  * **/
 
-public class SeverityMessageDecorator implements MessageDecorator {
+public class SeverityMessageDecorator extends MessageDecorator {
 
     private static String messageFormat = "%s %s";
+
+    public SeverityMessageDecorator(MessageDecorator nextDecorator) {
+        super(nextDecorator);
+    }
+
+    public SeverityMessageDecorator() {
+        super(null);
+    }
 
     /**
      * Метод возвращает строку с уровнем важности (severity).
@@ -20,16 +31,24 @@ public class SeverityMessageDecorator implements MessageDecorator {
      * @param message сообщение, которое будет сконкатинировано с уровнем важности
      *
      * **/
+    @Override
     public Message decorate(Message message) {
+        Message newMessage;
         switch (message.getSeverity()) {
             case MAJOR:
-                return new Message(String.format(messageFormat, message.getBody(), "(!!!)"), message.getSeverity());
+                newMessage = new Message(message, String.format(messageFormat, message.getBody(), "(!!!)"));
+                break;
             case REGULAR:
-                return new Message(String.format(messageFormat, message.getBody(), "(!)"), message.getSeverity());
+                newMessage = new Message(message, String.format(messageFormat, message.getBody(), "(!)"));
+                break;
             case MINOR:
-                return new Message(String.format(messageFormat, message.getBody(), "()"), message.getSeverity());
+                newMessage = new Message(message, String.format(messageFormat, message.getBody(), "()"));
+                break;
             default:
-                return new Message(String.format(messageFormat, message.getBody(), "(-)"), message.getSeverity());
+                newMessage = new Message(message, String.format(messageFormat, message.getBody(), "(-)"));
         }
+        return nextDecorator == null
+                ? newMessage
+                : nextDecorator.decorate(newMessage);
     }
 }

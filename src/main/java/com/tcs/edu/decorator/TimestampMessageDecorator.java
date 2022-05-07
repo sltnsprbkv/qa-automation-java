@@ -12,14 +12,26 @@ import java.time.Instant;
  * @author s.saparbekov
  * **/
 
-public class TimestampMessageDecorator implements MessageDecorator {
+public class TimestampMessageDecorator extends MessageDecorator {
+
+    public TimestampMessageDecorator(MessageDecorator nextDecorator) {
+        super(nextDecorator);
+    }
+
+    public TimestampMessageDecorator() {
+        super(null);
+    }
 
     /**
      * Метод возвращает строку с счетчиком (messageCount) и текущим временем.
      *
      * @param message строка, которая будет сконкатинирована с текущим временем
      * **/
+    @Override
     public Message decorate(Message message) {
-        return new Message(String.format("%s %s", Instant.now(), message.getBody()), message.getSeverity());
+        Message newMessage = new Message(message, String.format("%s %s", Instant.now(), message.getBody()));
+        return nextDecorator == null
+                ? newMessage
+                : nextDecorator.decorate(newMessage);
     }
 }

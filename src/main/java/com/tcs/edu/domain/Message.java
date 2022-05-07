@@ -45,6 +45,21 @@ public class Message {
     }
 
     /**
+     * Конструктор класса Message.
+     *
+     * @param message сообщение
+     * @param body тело сообщения, не может быть null
+     *
+     * **/
+    public Message(Message message, String body) {
+        if (body == null || message == null) {
+            throw new IllegalArgumentException("message or body of message is null");
+        }
+        this.severity = message.severity;
+        this.body = body;
+    }
+
+    /**
      * Получение тело сообщения.
      *
      * **/

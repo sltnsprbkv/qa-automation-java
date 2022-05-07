@@ -3,7 +3,6 @@ package com.tcs.edu.service;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
-import com.tcs.edu.repository.Decorator;
 import com.tcs.edu.repository.MessageDecorator;
 import com.tcs.edu.repository.MessageService;
 import com.tcs.edu.repository.Printer;
@@ -20,18 +19,18 @@ import java.util.stream.Stream;
 
 public class OrderedDistinctedMessageService implements MessageService {
 
-    private final MessageDecorator[] decorators;
+    private final MessageDecorator decorator;
     private final Printer printer;
 
     /**
      * Конструктор класса. Задает начальное состояние
      *
      * @param printer объект вывода сообщений
-     * @param decorators объекты декораторы
+     * @param decorator объекты декораторы
      *
      * **/
-    public OrderedDistinctedMessageService(Printer printer, MessageDecorator... decorators) {
-        this.decorators = decorators;
+    public OrderedDistinctedMessageService(Printer printer, MessageDecorator decorator) {
+        this.decorator = decorator;
         this.printer = printer;
     }
 
@@ -41,15 +40,11 @@ public class OrderedDistinctedMessageService implements MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
+    @Override
     public void print(Stream<Message> messages) {
         messages
                 .filter(Objects::nonNull)
-                .map(x -> {
-                    for (Decorator<Message> d : decorators) {
-                        x = d.decorate(x);
-                    }
-                    return x;
-                })
+                .map(decorator::decorate)
                 .forEach(message -> printer.print(message.getBody()));
     }
 
@@ -59,6 +54,7 @@ public class OrderedDistinctedMessageService implements MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
+    @Override
     public void print(Message... messages) {
         print(Arrays.stream(messages));
     }
@@ -70,6 +66,7 @@ public class OrderedDistinctedMessageService implements MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
+    @Override
     public void print(MessageOrder messageOrder, Message... messages) {
         var finalMessages = messages;
         if (messageOrder.equals(MessageOrder.DESC)) {
@@ -87,6 +84,7 @@ public class OrderedDistinctedMessageService implements MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
+    @Override
     public void print(
             MessageOrder messageOrder,
             Doubling doubling,
