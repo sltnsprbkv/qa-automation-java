@@ -1,6 +1,8 @@
 package com.tcs.edu.decorator;
 
+import com.tcs.edu.domain.Message;
 import com.tcs.edu.repository.Decorator;
+import com.tcs.edu.repository.MessageDecorator;
 
 /**
  * Декорирование сообщений с операцией добавления номера строки
@@ -8,16 +10,28 @@ import com.tcs.edu.repository.Decorator;
  * @author s.saparbekov
  * **/
 
-public class NumerateMessageDecorator implements Decorator<String> {
+public class NumerateMessageDecorator extends MessageDecorator {
 
     public static int messageCount = 0;
+
+    public NumerateMessageDecorator(MessageDecorator nextDecorator) {
+        super(nextDecorator);
+    }
+
+    public NumerateMessageDecorator() {
+        super(null);
+    }
 
     /**
      * Метод возвращает строку с счетчиком (messageCount) и увеличивает счетчик.
      *
      * @param message строка, которая будет сконкатинирована с ее номером
      * **/
-    public String decorate(String message) {
-        return String.format("%d %s", ++messageCount, message);
+    @Override
+    public Message decorate(Message message) {
+        Message newMessage = new Message(message, String.format("%d %s", ++messageCount, message.getBody()));
+        return nextDecorator == null
+                ? newMessage
+                : nextDecorator.decorate(newMessage);
     }
 }
