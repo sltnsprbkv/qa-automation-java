@@ -38,10 +38,25 @@ public class Message {
      * **/
     public Message(String body) {
         if (body == null) {
-            throw new IllegalArgumentException("body or severity of message is null");
+            throw new IllegalArgumentException("body of message is null");
         }
         this.body = body;
         this.severity = Severity.REGULAR;
+    }
+
+    /**
+     * Конструктор класса Message.
+     *
+     * @param message сообщение
+     * @param body тело сообщения, не может быть null
+     *
+     * **/
+    public Message(Message message, String body) {
+        if (body == null || message == null) {
+            throw new IllegalArgumentException("message or body of message is null");
+        }
+        this.severity = message.severity;
+        this.body = body;
     }
 
     /**

@@ -1,13 +1,11 @@
 package com.tcs.edu.service;
 
-import com.tcs.edu.decorator.NumerateMessageDecorator;
-import com.tcs.edu.decorator.SeparateDecorator;
-import com.tcs.edu.decorator.SeverityMessageDecorator;
-import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
-import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.repository.MessageDecorator;
+import com.tcs.edu.repository.MessageService;
+import com.tcs.edu.repository.Printer;
 import com.tcs.edu.utils.CustomCollectionOperations;
 
 import java.util.*;
@@ -19,22 +17,35 @@ import java.util.stream.Stream;
  * @author s.saparbekov
  * **/
 
-public class MessageService {
+public class OrderedDistinctedMessageService implements MessageService {
+
+    private final MessageDecorator decorator;
+    private final Printer printer;
 
     /**
-     * Метод выводит декорированные сообщения, кроме значений null
+     * Конструктор класса. Задает начальное состояние
      *
-     * @param messages декорируемые сообщения в stream
+     * @param printer объект вывода сообщений
+     * @param decorator объекты декораторы
      *
      * **/
-    public static void print(Stream<Message> messages) {
+    public OrderedDistinctedMessageService(Printer printer, MessageDecorator decorator) {
+        this.decorator = decorator;
+        this.printer = printer;
+    }
+
+    /**
+     * Метод выводит декорированные сообщения
+     *
+     * @param messages декорируемые сообщения
+     *
+     * **/
+    @Override
+    public void print(Stream<Message> messages) {
         messages
                 .filter(Objects::nonNull)
-                .map(message -> SeverityMessageDecorator.decorate(message.getSeverity(), message.getBody()))
-                .map(TimestampMessageDecorator::decorate)
-                .map(NumerateMessageDecorator::decorate)
-                .map(SeparateDecorator::decorate)
-                .forEach(ConsolePrinter::print);
+                .map(decorator::decorate)
+                .forEach(message -> printer.print(message.getBody()));
     }
 
     /**
@@ -43,7 +54,8 @@ public class MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
-    public static void print(Message... messages) {
+    @Override
+    public void print(Message... messages) {
         print(Arrays.stream(messages));
     }
 
@@ -54,7 +66,8 @@ public class MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
-    public static void print(MessageOrder messageOrder, Message... messages) {
+    @Override
+    public void print(MessageOrder messageOrder, Message... messages) {
         var finalMessages = messages;
         if (messageOrder.equals(MessageOrder.DESC)) {
             CustomCollectionOperations.reverse(finalMessages);
@@ -71,7 +84,8 @@ public class MessageService {
      * @param messages декорируемые сообщения
      *
      * **/
-    public static void print(
+    @Override
+    public void print(
             MessageOrder messageOrder,
             Doubling doubling,
             Message... messages
