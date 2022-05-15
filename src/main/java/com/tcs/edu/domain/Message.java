@@ -93,4 +93,13 @@ public class Message {
     public int hashCode() {
         return Objects.hash(body, severity);
     }
+
+    /**
+     * Возвращает строку, представляющую объект.
+     *
+     * **/
+    @Override
+    public String toString() {
+        return String.format("Message(%s, %s)", body, severity);
+    }
 }
