@@ -1,11 +1,6 @@
 package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.repository.Decorator;
-import com.tcs.edu.repository.MessageDecorator;
-import com.tcs.edu.repository.MessageService;
-
-import java.time.Instant;
 
 /**
  * Декорирование сообщений с операцией добавления уровня важности сообщения

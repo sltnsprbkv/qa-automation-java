@@ -9,7 +9,7 @@ import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
 import com.tcs.edu.model.Severity;
 import com.tcs.edu.printer.ConsolePrinter;
-import com.tcs.edu.repository.MessageDecorator;
+import com.tcs.edu.decorator.MessageDecorator;
 import com.tcs.edu.repository.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
 
