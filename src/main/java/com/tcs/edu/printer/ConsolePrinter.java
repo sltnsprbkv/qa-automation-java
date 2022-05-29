@@ -1,5 +1,6 @@
 package com.tcs.edu.printer;
 
+import com.tcs.edu.exception.PrintException;
 import com.tcs.edu.repository.Printer;
 import com.tcs.edu.service.ValidatedService;
 
@@ -19,7 +20,11 @@ public class ConsolePrinter extends ValidatedService implements Printer {
      * @param message строка, которая будет выведена на консоль.
      * **/
     public void print(String message) {
-        if (!super.isArgsValid(message)) throw new IllegalArgumentException("message is null");
-        System.out.println(message);
+        try {
+            super.isArgsValid(message);
+            System.out.println(message);
+        } catch (IllegalArgumentException e) {
+            throw new PrintException("print operation is cancelled", e);
+        }
     }
 }
