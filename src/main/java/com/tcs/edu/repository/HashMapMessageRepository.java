@@ -3,9 +3,11 @@ package com.tcs.edu.repository;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.exception.CrudOperationException;
 import com.tcs.edu.interfaces.MessageRepository;
+import com.tcs.edu.model.Severity;
 import com.tcs.edu.service.ValidatedMessageService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * {@code com.tcs.edu.printer.HashMapMessageRepository} Репозиторий сообщений с CRUD операциями
@@ -95,5 +97,12 @@ public class HashMapMessageRepository extends ValidatedMessageService implements
     public <S extends Message> Iterable<S> saveAll(Iterable<S> entities) {
         entities.forEach(this::save);
         return entities;
+    }
+
+    @Override
+    public Collection<Message> findBySeverity(Severity severity){
+        return findAll().stream()
+                .filter(message -> message.getSeverity().equals(severity))
+                .collect(Collectors.toList());
     }
 }
