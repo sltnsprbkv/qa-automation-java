@@ -9,7 +9,7 @@ import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
 import com.tcs.edu.model.Severity;
 import com.tcs.edu.printer.ConsolePrinter;
-import com.tcs.edu.repository.MessageDecorator;
+import com.tcs.edu.decorator.MessageDecorator;
 import com.tcs.edu.repository.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
 
@@ -25,7 +25,6 @@ class Application {
                 new ConsolePrinter(),
                 timestampMessageDecorator
         );
-
         service.print(new Message("message 1", Severity.MINOR));
         service.print(new Message("message 2", Severity.MAJOR), null); // Здесь пропускаем null
         service.print(
@@ -50,5 +49,8 @@ class Application {
                 new Message("😃", Severity.MAJOR),
                 new Message("😎" )
         );
+
+        System.out.println("\n\n\n");
+        System.out.println(new Message("TO STRING", Severity.MAJOR));
     }
 }

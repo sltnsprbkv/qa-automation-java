@@ -23,9 +23,6 @@ public class Message {
      *
      * **/
     public Message(String body, Severity severity) {
-        if (body == null || severity == null) {
-            throw new IllegalArgumentException("body or severity of message is null");
-        }
         this.body = body;
         this.severity = severity;
     }
@@ -37,11 +34,7 @@ public class Message {
      *
      * **/
     public Message(String body) {
-        if (body == null) {
-            throw new IllegalArgumentException("body of message is null");
-        }
-        this.body = body;
-        this.severity = Severity.REGULAR;
+        this(body, Severity.REGULAR);
     }
 
     /**
@@ -52,11 +45,7 @@ public class Message {
      *
      * **/
     public Message(Message message, String body) {
-        if (body == null || message == null) {
-            throw new IllegalArgumentException("message or body of message is null");
-        }
-        this.severity = message.severity;
-        this.body = body;
+        this(body, message.severity);
     }
 
     /**
@@ -103,5 +92,14 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(body, severity);
+    }
+
+    /**
+     * Возвращает строку, представляющую объект.
+     *
+     * **/
+    @Override
+    public String toString() {
+        return String.format("Message(%s, %s)", body, severity);
     }
 }

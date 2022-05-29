@@ -1,10 +1,6 @@
 package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.repository.Decorator;
-import com.tcs.edu.repository.MessageDecorator;
-
-import java.lang.reflect.Member;
 
 /**
  * Декорирование сообщений с операцией разделения

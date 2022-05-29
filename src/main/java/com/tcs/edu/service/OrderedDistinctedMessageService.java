@@ -3,7 +3,7 @@ package com.tcs.edu.service;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
-import com.tcs.edu.repository.MessageDecorator;
+import com.tcs.edu.decorator.MessageDecorator;
 import com.tcs.edu.repository.MessageService;
 import com.tcs.edu.repository.Printer;
 import com.tcs.edu.utils.CustomCollectionOperations;
