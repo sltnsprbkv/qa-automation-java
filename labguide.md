@@ -161,13 +161,13 @@ Hello world!
 Цели
 ----
 - [x] Задано общее пространство имен для всех классов приложения: `com.tcs.edu`
-- [x] Классы, отвечающие за реализацию вывода, инкапсулированы в подпакет `printer`
+- [x] Классы, отвечающие за реализацию вывода, инкапсулированы в подпакет `messageRepository`
 
 Задачи
 ------
 - [x] Добавить для класса `Application` директиву `package com.tcs.edu`
-- [x] Добавить для класса `ConsolePrinter` директиву `package com.tcs.edu.printer`
-- [x] В классе `Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.printer.ConsolePrinter`
+- [x] Добавить для класса `ConsolePrinter` директиву `package com.tcs.edu.messageRepository`
+- [x] В классе `Application` использовать второй класс по его полному имени: добавить директиву `import com.tcs.edu.messageRepository.ConsolePrinter`
 - [x] Выполните из консоли запуск приложения
 ```shell
  java -classpath target/app-1.0-SNAPSHOT.jar com.tcs.edu.Application

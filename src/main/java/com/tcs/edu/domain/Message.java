@@ -3,6 +3,8 @@ package com.tcs.edu.domain;
 import com.tcs.edu.model.Severity;
 
 import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * Представление сообщений в виде объектов
@@ -14,9 +16,24 @@ public class Message {
 
     private final String body;
     private final Severity severity;
+    private final UUID uuid;
 
     /**
      * Конструктор класса Message
+     *
+     * @param severity уровень важности, не может быть null
+     * @param body тело сообщения, не может быть null
+     * @param uuid идентификационный номер
+     *
+     * **/
+    public Message(String body, Severity severity, UUID uuid) {
+        this.body = body;
+        this.severity = severity;
+        this.uuid = uuid;
+    }
+
+    /**
+     * Конструктор класса Message. По-умолчанию идентификационный номер uuid задается случайным значением.
      *
      * @param severity уровень важности, не может быть null
      * @param body тело сообщения, не может быть null
@@ -25,6 +42,7 @@ public class Message {
     public Message(String body, Severity severity) {
         this.body = body;
         this.severity = severity;
+        this.uuid = UUID.randomUUID();
     }
 
     /**
@@ -65,6 +83,14 @@ public class Message {
     }
 
     /**
+     * Получение идентификационного номера.
+     *
+     * **/
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    /**
      * Операция сравнения сообщений.
      *
      * @param object сравниваемый объект
@@ -82,7 +108,9 @@ public class Message {
 
         Message message = (Message) object;
 
-        return (this.body.equals(message.body) && this.severity.equals(message.severity));
+        return (this.body.equals(message.body)
+                && this.severity.equals(message.severity)
+                && this.uuid.equals(message.uuid));
     }
 
     /**
@@ -91,7 +119,7 @@ public class Message {
      * **/
     @Override
     public int hashCode() {
-        return Objects.hash(body, severity);
+        return Objects.hash(body, severity, uuid);
     }
 
     /**
@@ -100,6 +128,6 @@ public class Message {
      * **/
     @Override
     public String toString() {
-        return String.format("Message(%s, %s)", body, severity);
+        return String.format("Message(%s, %s, %s)", body, severity, uuid);
     }
 }

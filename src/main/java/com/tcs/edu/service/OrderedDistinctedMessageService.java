@@ -4,8 +4,8 @@ import com.tcs.edu.domain.Message;
 import com.tcs.edu.model.Doubling;
 import com.tcs.edu.model.MessageOrder;
 import com.tcs.edu.decorator.MessageDecorator;
-import com.tcs.edu.repository.MessageService;
-import com.tcs.edu.repository.Printer;
+import com.tcs.edu.interfaces.MessageRepository;
+import com.tcs.edu.interfaces.MessageService;
 import com.tcs.edu.utils.CustomCollectionOperations;
 
 import java.util.*;
@@ -20,18 +20,18 @@ import java.util.stream.Stream;
 public class OrderedDistinctedMessageService implements MessageService {
 
     private final MessageDecorator decorator;
-    private final Printer printer;
+    private final MessageRepository messageRepository;
 
     /**
      * Конструктор класса. Задает начальное состояние
      *
-     * @param printer объект вывода сообщений
+     * @param messageRepository объект вывода сообщений
      * @param decorator объекты декораторы
      *
      * **/
-    public OrderedDistinctedMessageService(Printer printer, MessageDecorator decorator) {
+    public OrderedDistinctedMessageService(MessageRepository messageRepository, MessageDecorator decorator) {
         this.decorator = decorator;
-        this.printer = printer;
+        this.messageRepository = messageRepository;
     }
 
     /**
@@ -41,11 +41,11 @@ public class OrderedDistinctedMessageService implements MessageService {
      *
      * **/
     @Override
-    public void print(Stream<Message> messages) {
+    public void log(Stream<Message> messages) {
         messages
                 .filter(Objects::nonNull)
                 .map(decorator::decorate)
-                .forEach(message -> printer.print(message.getBody()));
+                .forEach(messageRepository::save);
     }
 
     /**
@@ -55,8 +55,8 @@ public class OrderedDistinctedMessageService implements MessageService {
      *
      * **/
     @Override
-    public void print(Message... messages) {
-        print(Arrays.stream(messages));
+    public void log(Message... messages) {
+        log(Arrays.stream(messages));
     }
 
     /**
@@ -67,12 +67,12 @@ public class OrderedDistinctedMessageService implements MessageService {
      *
      * **/
     @Override
-    public void print(MessageOrder messageOrder, Message... messages) {
+    public void log(MessageOrder messageOrder, Message... messages) {
         var finalMessages = messages;
         if (messageOrder.equals(MessageOrder.DESC)) {
             CustomCollectionOperations.reverse(finalMessages);
         }
-        print(finalMessages);
+        log(finalMessages);
     }
 
     /**
@@ -85,12 +85,12 @@ public class OrderedDistinctedMessageService implements MessageService {
      *
      * **/
     @Override
-    public void print(
+    public void log(
             MessageOrder messageOrder,
             Doubling doubling,
             Message... messages
     ) {
-        print(messageOrder, doubling.equals(Doubling.DISTINCT)
+        log(messageOrder, doubling.equals(Doubling.DISTINCT)
                 ? new HashSet<>(Arrays.asList(messages)).toArray(messages)
                 : messages);
     }

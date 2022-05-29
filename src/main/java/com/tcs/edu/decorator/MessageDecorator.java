@@ -1,7 +1,7 @@
 package com.tcs.edu.decorator;
 
 import com.tcs.edu.domain.Message;
-import com.tcs.edu.repository.Decorator;
+import com.tcs.edu.interfaces.Decorator;
 
 public abstract class MessageDecorator implements Decorator<Message> {
     public MessageDecorator nextDecorator;
