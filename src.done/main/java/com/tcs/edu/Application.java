@@ -1,7 +1,7 @@
 package com.tcs.edu;
 
 import com.tcs.edu.decorator.TimestampMessageDecorator;
-import com.tcs.edu.printer.ConsolePrinter;
+import com.tcs.edu.repository.ConsolePrinter;
 
 /**
  * Main class: entry point

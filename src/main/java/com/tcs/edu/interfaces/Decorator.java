@@ -1,4 +1,4 @@
-package com.tcs.edu.repository;
+package com.tcs.edu.interfaces;
 
 public interface Decorator<T> {
 
