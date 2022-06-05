@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class HashMapMessageRepository extends ValidatedMessageService implements MessageRepository {
 
-    private Map<UUID, Message> messages = new HashMap<>();
+    private final Map<UUID, Message> messages = new HashMap<>();
 
     @Override
     public long count() {
@@ -77,26 +77,22 @@ public class HashMapMessageRepository extends ValidatedMessageService implements
     @Override
     public Optional<Message> findById(UUID uuid) {
         Message resultMessage = messages.get(uuid);
-        if (resultMessage == null)
-            return Optional.empty();
-        return Optional.of(resultMessage);
+        return Optional.ofNullable(resultMessage);
     }
 
     @Override
-    public <S extends Message> S save(S entity) {
+    public <S extends Message> void save(S entity) {
         try {
             super.isArgsValid(entity);
             messages.put(entity.getUuid(), entity);
-            return entity;
         } catch (IllegalArgumentException e) {
             throw new CrudOperationException("save operation is cancelled", e);
         }
     }
 
     @Override
-    public <S extends Message> Iterable<S> saveAll(Iterable<S> entities) {
+    public <S extends Message> void saveAll(Iterable<S> entities) {
         entities.forEach(this::save);
-        return entities;
     }
 
     @Override

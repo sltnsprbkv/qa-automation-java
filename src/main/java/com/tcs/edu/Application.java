@@ -21,6 +21,13 @@ import java.util.UUID;
 
 class Application {
     public static void main(String[] args) {
+        Message message = Message.builder()
+                .setBody("123")
+                .setSeverity(Severity.MINOR)
+                .build();
+
+        System.out.println(message);
+
 
         //---------------------------------------------------------------------------------------
 

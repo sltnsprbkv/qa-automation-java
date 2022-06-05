@@ -1,5 +1,6 @@
 package com.tcs.edu.interfaces;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -49,12 +50,12 @@ public interface CrudRepository<T, ID> {
     /**
      *    Returns all instances of the type.
      * **/
-    Iterable<T>	findAll();
+    Collection<T> findAll();
 
     /**
      *    Returns all instances of the type T with the given IDs.
      * **/
-    Iterable<T>	findAllById(Iterable<ID> ids);
+    Collection<T> findAllById(Iterable<ID> ids);
 
     /**
      *    Retrieves an entity by its id.
@@ -65,11 +66,11 @@ public interface CrudRepository<T, ID> {
      *    Saves a given entity.
      * **/
     <S extends T>
-    S save(S entity);
+    void save(S entity);
 
     /**
      *    Saves all given entities.
      * **/
     <S extends T>
-    Iterable<S>	saveAll(Iterable<S> entities);
+    void saveAll(Iterable<S> entities);
 }
