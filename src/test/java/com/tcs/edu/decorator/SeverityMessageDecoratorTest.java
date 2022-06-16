@@ -20,7 +20,7 @@ class SeverityMessageDecoratorTest {
     @MethodSource("messageBodyProvider")
     void shouldReturnSevDecoratedMessageTest(Message message, String expectedMessageBody) {
         var decoratedMessage = decorator.decorate(message);
-        assertEquals(decoratedMessage.getBody(), expectedMessageBody);
+        assertEquals(expectedMessageBody, decoratedMessage.getBody());
     }
 
     static Stream<Arguments> messageBodyProvider() {

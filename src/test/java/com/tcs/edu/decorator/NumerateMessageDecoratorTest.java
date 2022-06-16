@@ -17,6 +17,6 @@ class NumerateMessageDecoratorTest {
         // when
         var decoratedMessage = decorator.decorate(message);
         // then
-        assertEquals(decoratedMessage.getBody(), String.format("1 %s", messageBody));
+        assertEquals(String.format("1 %s", messageBody), decoratedMessage.getBody());
     }
 }

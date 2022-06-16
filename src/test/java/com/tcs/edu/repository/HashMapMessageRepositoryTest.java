@@ -16,7 +16,7 @@ class HashMapMessageRepositoryTest {
     void shouldReturnEmptyHashMapMessageRepositoryCountTest() {
         HashMapMessageRepository hashMapMessageRepository = new HashMapMessageRepository();
 
-        Assertions.assertEquals(hashMapMessageRepository.count(), 0);
+        Assertions.assertEquals(0, hashMapMessageRepository.count());
     }
 
     @Test
@@ -26,7 +26,7 @@ class HashMapMessageRepositoryTest {
         hashMapMessageRepository.save(new Message(RandomStringUtils.randomAlphabetic(10)));
         hashMapMessageRepository.save(new Message(RandomStringUtils.randomAlphabetic(10)));
 
-        Assertions.assertEquals(hashMapMessageRepository.count(), 3);
+        Assertions.assertEquals(3, hashMapMessageRepository.count());
     }
 
     @Test
@@ -51,7 +51,7 @@ class HashMapMessageRepositoryTest {
 
         hashMapMessageRepository.deleteAll();
 
-        Assertions.assertEquals(hashMapMessageRepository.count(), 0);
+        Assertions.assertEquals(0, hashMapMessageRepository.count());
         Assertions.assertFalse(hashMapMessageRepository.existsById(curMessage1.getUuid()));
         Assertions.assertFalse(hashMapMessageRepository.existsById(curMessage2.getUuid()));
     }
@@ -147,7 +147,7 @@ class HashMapMessageRepositoryTest {
 
         Optional<Message> resultMessage = hashMapMessageRepository.findById(curMessage1.getUuid());
 
-        Assertions.assertEquals(resultMessage.get(), curMessage1);
+        Assertions.assertEquals(curMessage1, resultMessage.get());
         Assertions.assertNotEquals(resultMessage.get(), curMessage2);
     }
 
@@ -158,7 +158,7 @@ class HashMapMessageRepositoryTest {
 
         hashMapMessageRepository.save(curMessage);
 
-        Assertions.assertEquals(hashMapMessageRepository.count(), 1);
+        Assertions.assertEquals(1, hashMapMessageRepository.count());
         Assertions.assertTrue(hashMapMessageRepository.existsById(curMessage.getUuid()));
     }
 
@@ -174,7 +174,7 @@ class HashMapMessageRepositoryTest {
                 curMessage3
         ));
 
-        Assertions.assertEquals(hashMapMessageRepository.count(), 2);
+        Assertions.assertEquals(2, hashMapMessageRepository.count());
         Assertions.assertTrue(hashMapMessageRepository.existsById(curMessage2.getUuid()));
         Assertions.assertTrue(hashMapMessageRepository.existsById(curMessage3.getUuid()));
         Assertions.assertFalse(hashMapMessageRepository.existsById(curMessage1.getUuid()));

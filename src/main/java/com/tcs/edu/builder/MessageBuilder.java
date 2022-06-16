@@ -13,17 +13,17 @@ public class MessageBuilder {
 
     public MessageBuilder() {}
 
-    public MessageBuilder setUuid(UUID uuid) {
+    public MessageBuilder uuid(UUID uuid) {
         this.uuid = uuid;
         return this;
     }
 
-    public MessageBuilder setSeverity(Severity severity) {
+    public MessageBuilder severity(Severity severity) {
         this.severity = severity;
         return this;
     }
 
-    public MessageBuilder setBody(String body) {
+    public MessageBuilder body(String body) {
         this.body = body;
         return this;
     }

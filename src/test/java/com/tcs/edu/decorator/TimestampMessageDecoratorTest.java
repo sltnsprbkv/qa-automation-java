@@ -19,7 +19,7 @@ class TimestampMessageDecoratorTest {
         var wrds = decoratedMessage.getBody().split(" ");
         // then
         assertTrue(wrds[0].matches("^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{2,10})Z$")); // 2022-06-02T16:02:38.063300600Z
-        assertEquals(wrds[1],  messageBody);
+        assertEquals(messageBody, wrds[1]);
     }
 
 }
