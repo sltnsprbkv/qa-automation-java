@@ -28,9 +28,9 @@ public class TimestampMessageDecorator extends MessageDecorator {
     @Override
     public Message decorate(Message message) {
         Message newMessage = Message.builder()
-                .setBody(String.format("%s %s", Instant.now(), message.getBody()))
-                .setSeverity(message.getSeverity())
-                .setUuid(message.getUuid())
+                .body(String.format("%s %s", Instant.now(), message.getBody()))
+                .severity(message.getSeverity())
+                .uuid(message.getUuid())
                 .build();
         return nextDecorator == null
                 ? newMessage

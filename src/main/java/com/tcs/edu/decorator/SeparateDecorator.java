@@ -10,8 +10,8 @@ import com.tcs.edu.domain.Message;
 
 public class SeparateDecorator extends MessageDecorator {
 
-    public final int PAGE_SIZE = 3;
-    public final String SEPARATOR = "\n---";
+    public static final int PAGE_SIZE = 3;
+    public static final String SEPARATOR = "\n---";
 
     public SeparateDecorator(MessageDecorator nextDecorator) {
         super(nextDecorator);

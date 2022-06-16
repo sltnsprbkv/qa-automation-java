@@ -6,8 +6,6 @@ import com.tcs.edu.decorator.SeverityMessageDecorator;
 import com.tcs.edu.decorator.TimestampMessageDecorator;
 import com.tcs.edu.domain.Message;
 import com.tcs.edu.interfaces.MessageRepository;
-import com.tcs.edu.model.Doubling;
-import com.tcs.edu.model.MessageOrder;
 import com.tcs.edu.model.Severity;
 import com.tcs.edu.repository.HashMapMessageRepository;
 import com.tcs.edu.decorator.MessageDecorator;
@@ -15,15 +13,14 @@ import com.tcs.edu.interfaces.MessageService;
 import com.tcs.edu.service.OrderedDistinctedMessageService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 class Application {
     public static void main(String[] args) {
         Message message = Message.builder()
-                .setBody("123")
-                .setSeverity(Severity.MINOR)
+                .body("123")
+                .severity(Severity.MINOR)
                 .build();
 
         System.out.println(message);
