@@ -10,8 +10,8 @@ import com.tcs.edu.domain.Message;
 
 public class SeparateDecorator extends MessageDecorator {
 
-    private static int PAGE_SIZE = 3;
-    private static String separator = "\n---";
+    public static final int PAGE_SIZE = 3;
+    public static final String SEPARATOR = "\n---";
 
     public SeparateDecorator(MessageDecorator nextDecorator) {
         super(nextDecorator);
@@ -29,7 +29,7 @@ public class SeparateDecorator extends MessageDecorator {
     @Override
     public Message decorate(Message message) {
         Message newMessage = NumerateMessageDecorator.messageCount % PAGE_SIZE == 0
-                ? new Message(message, message.getBody() + separator)
+                ? new Message(message, message.getBody() + SEPARATOR)
                 : new Message(message, message.getBody());
         return nextDecorator == null
                 ? newMessage

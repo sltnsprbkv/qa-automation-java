@@ -1,9 +1,9 @@
 package com.tcs.edu.domain;
 
+import com.tcs.edu.builder.MessageBuilder;
 import com.tcs.edu.model.Severity;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -129,5 +129,13 @@ public class Message {
     @Override
     public String toString() {
         return String.format("Message(%s, %s, %s)", body, severity, uuid);
+    }
+
+    /**
+     * Возвращает builder.
+     *
+     * **/
+    public static MessageBuilder builder() {
+        return new MessageBuilder();
     }
 }
