@@ -39,22 +39,29 @@ class CountryResourceTest extends RestApiWithDBBaseTest {
     }
 
     @Test
-    void postApiCountriesTest() {
-        given().
-                spec(requestSpec).
-                contentType("application/json").
-                body("{\"countryName\": \"st\"}").
-        when().
-                post("/api/countries").
-        then().
-                log().all().
-                assertThat().
-                statusCode(201);
+    void postApiCountriesTest() throws SQLException {
+        var countryName = "xc";
+        Long id =
+            given().
+                    spec(requestSpec).
+                    contentType("application/json").
+                    body("{\"countryName\": \"st\"}").
+            when().
+                    post("/api/countries").
+            then().
+                    assertThat().
+                    statusCode(201).
+                    extract().
+                    path("id");
+
+        Assertions.assertEquals(countryName, getCountryNameById(id));
+
     }
 
     @Test
     void putApiCountriesIdTest() throws SQLException {
         var id = addCountryToTable("fd");
+        countryIds.add(id);
         var newCountryName = "qe";
         given().
                 spec(requestSpec).
@@ -71,13 +78,14 @@ class CountryResourceTest extends RestApiWithDBBaseTest {
     }
 
     @Test
-    void deleteApiCountriesIdTest() {
-
+    void deleteApiCountriesIdTest() throws SQLException {
+        var countryName = "cb";
+        var id = addCountryToTable(countryName);
         given().
                 spec(requestSpec).
-                body("{ \"id\": 3, \"countryName\": \"sa\" }").
+                body(String.format("{ \"id\": %d, \"countryName\": \"%s\" }", id, countryName)).
         when().
-                delete("/api/countries/3").
+                delete("/api/countries/" + id).
         then().
                 assertThat().
                 statusCode(204);
